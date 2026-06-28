@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)file:///Users/robynavery/Downloads/thepotunlimited.html#feat-1 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Pot Unlimited — Group Savings, Reimagined</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./The Pot Unlimited — Group Savings, Reimagined_files/css2" rel="stylesheet">
+<script src="./The Pot Unlimited — Group Savings, Reimagined_files/vanilla-tilt.min.js"></script>
+
+<style>
+  :root {
+    --black:        #0A0810;
+    --purple-void:  #0F0B1A;
+    --purple-deep:  #1A1228;
+    --purple-mid:   #2D1F50;
+    --purple-rich:  #3D2870;
+    --purple-glow:  #5B3FA0;
+    --gold:         #C9A84C;
+    --gold-bright:  #E8C55A;
+    --gold-pale:    #F0D98A;
+    --gold-dim:     #8A6F2E;
+    --cream:        #F5EFD8;
+    --cream-dim:    #C4B98A;
+    --white:        #FDFBF5;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--black);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    color: var(--cream);
+    cursor: none;
+    overflow-x: hidden;
+  }
+
+  /* ─── CURSOR ─── */
+  .cursor { position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none; }
+  .cursor-dot {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+  }
+  .cursor-ring {
+    width: 40px; height: 40px;
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 50%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    transition: width .35s, height .35s, border-color .35s;
+  }
+  body:has(.card:hover) .cursor-ring,
+  body:has(a:hover) .cursor-ring,
+  body:has(button:hover) .cursor-ring {
+    width: 64px; height: 64px;
+    border-color: var(--gold);
+  }
+
+  /* ─── SCROLL SNAP ─── */
+  section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ────────────────────────────────────────────
+     HERO
+  ──────────────────────────────────────────── */
+  #hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--black);
+  }
+
+  /* Animated video-loop BG — cinematic purple atmosphere */
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    overflow: hidden;
+  }
+  .hero-bg::before {
+    content: '';
+    position: absolute; inset: -20%;
+    background:
+      radial-gradient(ellipse 70% 50% at 20% 80%, rgba(61,40,112,0.9) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 70% at 80% 20%, rgba(91,63,160,0.5) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(26,18,40,1) 0%, transparent 70%),
+      linear-gradient(160deg, #0A0810 0%, #0F0B1A 40%, #1A1228 80%, #0A0810 100%);
+    animation: atmosphereDrift 20s ease-in-out infinite alternate;
+  }
+  /* Floating coin/orb glow simulating video motion */
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    animation: orbPulse 6s ease-in-out infinite;
+  }
+  @keyframes atmosphereDrift {
+    0%   { transform: translate(0,0) scale(1); }
+    50%  { transform: translate(2%,1%) scale(1.03); }
+    100% { transform: translate(-1%,2%) scale(1.01); }
+  }
+  @keyframes orbPulse {
+    0%,100% { opacity: .4; transform: translate(-50%,-50%) scale(1); }
+    50%     { opacity: .9; transform: translate(-50%,-48%) scale(1.1); }
+  }
+
+  /* CSS gold coin animation — replaces WebGL coins */
+  .coin-field {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden;
+  }
+  .coin {
+    position: absolute;
+    border-radius: 50%;
+    animation: coinFloat linear infinite;
+    opacity: 0;
+  }
+  @keyframes coinFloat {
+    0%   { transform: translateY(110vh) rotateY(0deg) scale(0.6);  opacity: 0; }
+    8%   { opacity: .7; }
+    90%  { opacity: .4; }
+    100% { transform: translateY(-20vh) rotateY(720deg) scale(1.2); opacity: 0; }
+  }
+
+  .hero-content {
+    position: relative; z-index: 3;
+    text-align: center;
+    padding: 0 2rem;
+    max-width: 900px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .65rem;
+    font-weight: 400;
+    letter-spacing: .5em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.8rem;
+    opacity: 0;
+    animation: riseIn .7s .2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 14vw, 13rem);
+    line-height: .88;
+    letter-spacing: .02em;
+    color: var(--cream);
+    margin-bottom: 0;
+    opacity: 0;
+    animation: riseIn .9s .4s forwards;
+  }
+  .hero-title .the   { display: block; font-size: .55em; letter-spacing: .12em; color: var(--gold); }
+  .hero-title .pot   { display: block; }
+  .hero-title .unlim {
+    display: block;
+    font-size: .38em;
+    letter-spacing: .25em;
+    color: var(--cream-dim);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 200;
+    text-transform: uppercase;
+  }
+
+  .hero-tagline {
+    font-size: clamp(.8rem, 1.5vw, 1rem);
+    font-weight: 300;
+    line-height: 1.9;
+    color: rgba(196,185,138,0.8);
+    max-width: 44ch;
+    margin: 2.5rem auto 3.5rem;
+    letter-spacing: .04em;
+    opacity: 0;
+    animation: riseIn .9s .65s forwards;
+  }
+
+  .hero-actions {
+    display: flex; align-items: center; justify-content: center; gap: 1.5rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: riseIn .9s .85s forwards;
+  }
+
+  .btn-gold {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    padding: 1rem 2.8rem;
+    text-decoration: none;
+    position: relative; overflow: hidden;
+    transition: color .3s;
+    display: inline-block;
+  }
+  .btn-gold::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--gold-bright);
+    transform: translateX(-101%);
+    transition: transform .4s cubic-bezier(.4,0,.2,1);
+  }
+  .btn-gold:hover::before { transform: translateX(0); }
+  .btn-gold span { position: relative; z-index: 1; }
+
+  .btn-ghost {
+    font-size: .7rem;
+    font-weight: 400;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: .8rem;
+    transition: color .3s;
+  }
+  .btn-ghost::after {
+    content: '';
+    display: block; width: 30px; height: 1px;
+    background: currentColor;
+    transition: width .3s;
+  }
+  .btn-ghost:hover { color: var(--gold); }
+  .btn-ghost:hover::after { width: 50px; }
+
+  .scroll-cue {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    z-index: 3;
+    display: flex; flex-direction: column; align-items: center; gap: .6rem;
+    opacity: 0; animation: riseIn .8s 1.4s forwards;
+  }
+  .scroll-cue span {
+    font-size: .5rem; letter-spacing: .4em; text-transform: uppercase;
+    color: var(--gold-dim);
+  }
+  .scroll-cue-line {
+    width: 1px; height: 48px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: linePulse 2.2s ease-in-out infinite;
+  }
+  @keyframes linePulse { 0%,100%{opacity:.3;} 50%{opacity:1;} }
+
+  @keyframes riseIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ────────────────────────────────────────────
+     HOW IT WORKS — SVG path reveal (floor plan equivalent)
+  ──────────────────────────────────────────── */
+  #how {
+    background: var(--purple-void);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7vw;
+    padding: 0 6vw;
+  }
+
+  .how-text { flex: 0 0 380px; }
+
+  .section-label {
+    font-size: .6rem;
+    letter-spacing: .4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::after {
+    content: ''; display: block;
+    width: 36px; height: 1px;
+    background: var(--gold); opacity: .5;
+  }
+
+  .how-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.4rem, 4vw, 3.6rem);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+  }
+  .how-title em { font-style: italic; color: var(--gold-pale); }
+
+  .how-body {
+    font-size: .82rem;
+    line-height: 2;
+    color: var(--cream-dim);
+    letter-spacing: .03em;
+    margin-bottom: 2.5rem;
+  }
+
+  .steps-list { list-style: none; }
+  .steps-list li {
+    display: flex; gap: 1.2rem; align-items: flex-start;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    color: var(--gold-dim);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 28px;
+  }
+  .step-text strong {
+    display: block;
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--cream);
+    margin-bottom: .3rem;
+  }
+  .step-text span {
+    font-size: .72rem;
+    color: var(--cream-dim);
+    line-height: 1.7;
+  }
+
+  /* SVG "circuit / flow diagram" — draws on scroll like floor plan */
+  .flow-svg-wrap {
+    flex: 0 0 44vw; max-width: 520px;
+  }
+  .flow-svg { width: 100%; height: auto; }
+
+  .flow-path {
+    fill: none;
+    stroke-dasharray: 1600;
+    stroke-dashoffset: 1600;
+    transition: stroke-dashoffset 2.4s cubic-bezier(.4,0,.2,1);
+  }
+  .flow-path.drawn { stroke-dashoffset: 0; }
+
+  .flow-node {
+    opacity: 0;
+    transition: opacity .5s;
+  }
+  .flow-node.drawn { opacity: 1; }
+
+  /* ────────────────────────────────────────────
+     FEATURE ROOMS — same scroll-snap gallery as architectural
+  ──────────────────────────────────────────── */
+  .feature-room {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--purple-deep);
+  }
+
+  .feature-visual {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* CSS cinematic scene backgrounds */
+  .scene-pool {
+    background:
+      radial-gradient(ellipse 60% 40% at 40% 70%, rgba(61,40,112,0.95) 0%, rgba(15,11,26,1) 70%),
+      linear-gradient(160deg, #1A1228 0%, #0F0B1A 100%);
+  }
+  .scene-stats {
+    background:
+      radial-gradient(ellipse 80% 50% at 70% 30%, rgba(91,63,160,0.6) 0%, rgba(10,8,16,1) 65%),
+      linear-gradient(180deg, #0A0810 0%, #1A1228 100%);
+  }
+  .scene-social {
+    background:
+      radial-gradient(ellipse 50% 80% at 30% 50%, rgba(45,31,80,0.9) 0%, rgba(10,8,16,1) 65%),
+      linear-gradient(130deg, #0F0B1A 0%, #0A0810 100%);
+  }
+
+  /* Decorative SVG icons floating in each scene */
+  .scene-deco {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .feature-room:nth-child(even) .feature-visual { order: 2; }
+  .feature-room:nth-child(even) .feature-info   { order: 1; }
+
+  .feature-info {
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 8% 9%;
+    background: var(--purple-void);
+    position: relative;
+  }
+  .feature-info::before {
+    content: attr(data-icon);
+    position: absolute; top: 2.5rem; right: 3rem;
+    font-size: 5rem; line-height: 1;
+    opacity: .06;
+    font-family: 'Bebas Neue', sans-serif;
+    color: var(--gold);
+  }
+
+  .feature-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 5vw, 5rem);
+    letter-spacing: .04em;
+    color: var(--cream);
+    line-height: .9;
+    margin-bottom: .5rem;
+  }
+  .feature-name em {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    color: var(--gold-pale);
+    display: block;
+    font-size: .65em;
+    letter-spacing: .02em;
+  }
+
+  .gold-rule {
+    width: 56px; height: 2px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    margin: 1.5rem 0;
+  }
+
+  .feature-desc {
+    font-size: .8rem;
+    line-height: 2;
+    color: var(--cream-dim);
+    max-width: 42ch;
+    margin-bottom: 2.5rem;
+    letter-spacing: .03em;
+  }
+
+  .feature-tags {
+    display: flex; gap: .7rem; flex-wrap: wrap;
+  }
+  .tag {
+    font-size: .58rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: .45rem 1rem;
+    background: rgba(201,168,76,0.05);
+    transition: background .3s, border-color .3s;
+  }
+  .tag:hover { background: rgba(201,168,76,0.12); border-color: var(--gold); }
+
+  /* ────────────────────────────────────────────
+     TILT CARDS — feature pods
+  ──────────────────────────────────────────── */
+  #pods {
+    background: var(--black);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    padding: 5rem 5vw;
+  }
+
+  .pods-header { text-align: center; }
+  .pods-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    letter-spacing: .06em;
+    color: var(--cream);
+    line-height: 1;
+  }
+  .pods-header h2 span { color: var(--gold); }
+  .pods-header p {
+    font-size: .72rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    margin-top: 1rem;
+  }
+
+  .pods-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+    width: 100%;
+    max-width: 1050px;
+  }
+
+  .pod {
+    background: var(--purple-deep);
+    border: 1px solid rgba(201,168,76,0.1);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    cursor: none;
+    transition: border-color .3s;
+  }
+  .pod:hover { border-color: rgba(201,168,76,0.35); }
+
+  .pod::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 80% at 50% 0%, rgba(91,63,160,0.15) 0%, transparent 70%);
+    opacity: 0; transition: opacity .4s;
+  }
+  .pod:hover::before { opacity: 1; }
+
+  .pod-icon {
+    width: 44px; height: 44px;
+    background: rgba(201,168,76,0.1);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    transition: background .3s;
+  }
+  .pod:hover .pod-icon { background: rgba(201,168,76,0.2); }
+
+  .pod-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    color: var(--cream);
+    margin-bottom: .7rem;
+    line-height: 1.2;
+  }
+
+  .pod-body {
+    font-size: .72rem;
+    line-height: 1.9;
+    color: var(--cream-dim);
+    letter-spacing: .02em;
+  }
+
+  .pod-corner {
+    position: absolute; bottom: 1.2rem; right: 1.2rem;
+    width: 18px; height: 18px;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    border-right: 1px solid rgba(201,168,76,0.3);
+    transition: width .3s, height .3s, border-color .3s;
+  }
+  .pod:hover .pod-corner {
+    width: 28px; height: 28px;
+    border-color: var(--gold);
+  }
+
+  /* ────────────────────────────────────────────
+     SOCIAL PROOF / NUMBERS
+  ──────────────────────────────────────────── */
+  #proof {
+    background: var(--purple-mid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4rem;
+    padding: 0 6vw;
+    position: relative;
+    overflow: hidden;
+  }
+  #proof::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 100% 60% at 50% 0%, rgba(91,63,160,0.3) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(10,8,16,0.6) 0%, transparent 60%);
+  }
+
+  .proof-numbers {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
+    width: 100%;
+    max-width: 900px;
+    position: relative; z-index: 1;
+  }
+
+  .proof-num-item { text-align: center; }
+  .proof-big {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    color: var(--gold-bright);
+    line-height: 1;
+    display: block;
+  }
+  .proof-label {
+    font-size: .6rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    display: block;
+    margin-top: .4rem;
+  }
+
+  .proof-quote {
+    max-width: 680px; text-align: center;
+    position: relative; z-index: 1;
+  }
+  .proof-quote blockquote {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    line-height: 1.45;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+  }
+  .proof-quote cite {
+    font-size: .65rem;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-style: normal;
+  }
+
+  /* ────────────────────────────────────────────
+     CLOSING CTA
+  ──────────────────────────────────────────── */
+  #cta {
+    background: var(--black);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Massive watermark text */
+  #cta::before {
+    content: 'THE POT';
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(10rem, 24vw, 22rem);
+    color: rgba(201,168,76,0.03);
+    letter-spacing: .1em;
+    white-space: nowrap;
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  /* Glow ring animation */
+  #cta::after {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.06);
+    animation: ringExpand 4s ease-out infinite;
+  }
+  @keyframes ringExpand {
+    0%   { transform: scale(.8); opacity: .8; }
+    100% { transform: scale(1.8); opacity: 0; }
+  }
+
+  .cta-inner {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 0 4rem;
+  }
+
+  .cta-tag {
+    font-size: .6rem; letter-spacing: .4em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 2rem; display: block;
+  }
+
+  .cta-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 9vw, 8.5rem);
+    letter-spacing: .04em;
+    color: var(--cream);
+    line-height: .9;
+    margin-bottom: 1.5rem;
+  }
+  .cta-title span {
+    display: block;
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: .55em;
+    color: var(--gold-pale);
+    letter-spacing: .06em;
+  }
+
+  .cta-sub {
+    font-size: .78rem;
+    line-height: 2;
+    color: var(--cream-dim);
+    max-width: 46ch;
+    margin: 0 auto 3rem;
+    letter-spacing: .03em;
+  }
+
+  .cta-buttons {
+    display: flex; align-items: center; justify-content: center;
+    gap: 1.5rem; flex-wrap: wrap;
+    margin-bottom: 4rem;
+  }
+
+  .app-badge {
+    display: inline-flex; align-items: center; gap: .8rem;
+    background: var(--purple-deep);
+    border: 1px solid rgba(201,168,76,0.25);
+    padding: .9rem 1.8rem;
+    text-decoration: none;
+    color: var(--cream);
+    font-size: .7rem;
+    letter-spacing: .05em;
+    transition: border-color .3s, background .3s;
+  }
+  .app-badge:hover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.08);
+  }
+  .app-badge svg { flex-shrink: 0; }
+
+  .cta-url {
+    font-size: .6rem; letter-spacing: .25em;
+    text-transform: uppercase; color: var(--gold-dim);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding-bottom: .2rem;
+    transition: color .2s, border-color .2s;
+  }
+  .cta-url:hover { color: var(--gold); border-color: var(--gold); }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 200;
+    padding: 1.5rem 4vw;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  nav::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(10,8,16,0.85) 0%, transparent 100%);
+    backdrop-filter: blur(0px);
+    pointer-events: none;
+  }
+
+  .nav-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: .12em;
+    color: var(--cream);
+    text-decoration: none;
+    position: relative;
+    display: flex; align-items: center; gap: .8rem;
+  }
+  .nav-brand::before {
+    content: '◆';
+    color: var(--gold);
+    font-size: .8rem;
+    animation: diamondSpin 8s linear infinite;
+  }
+  @keyframes diamondSpin {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none; position: relative;
+  }
+  .nav-links a {
+    font-size: .6rem; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--cream-dim);
+    text-decoration: none; transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-cta {
+    font-size: .6rem; letter-spacing: .15em;
+    text-transform: uppercase;
+    background: var(--gold);
+    color: var(--black);
+    padding: .55rem 1.5rem;
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    transition: background .3s;
+  }
+  .nav-cta:hover { background: var(--gold-bright); }
+
+  /* ─── GRAIN ─── */
+  body::after {
+    content: '';
+    position: fixed; inset: 0; z-index: 9000;
+    pointer-events: none; opacity: .03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 150px;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor">
+  <div class="cursor-ring" id="cRing" style="left: 928.409px; top: 433.101px;"></div>
+  <div class="cursor-dot" id="cDot" style="left: 1085px; top: 424px;"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="file:///Users/robynavery/Downloads/thepotunlimited.html#" class="nav-brand" style="color: rgb(245, 239, 216);">The Pot Unlimited</a>
+  <ul class="nav-links">
+    <li><a href="file:///Users/robynavery/Downloads/thepotunlimited.html#how">How It Works</a></li>
+    <li><a href="file:///Users/robynavery/Downloads/thepotunlimited.html#feat-1">Features</a></li>
+    <li><a href="file:///Users/robynavery/Downloads/thepotunlimited.html#pods">Why Us</a></li>
+    <li><a href="file:///Users/robynavery/Downloads/thepotunlimited.html#cta">Get The App</a></li>
+  </ul>
+  <a href="file:///Users/robynavery/Downloads/thepotunlimited.html#cta" class="nav-cta">Start Saving</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+
+  <!-- CSS Gold Coin Field (video loop equivalent) -->
+  <div class="coin-field" id="coinField"><div class="coin" style="width: 22.3961px; height: 22.3961px; left: 69.0077vw; background: radial-gradient(circle at 35% 30%, rgb(245, 232, 154) 0%, rgb(212, 174, 90) 40%, rgb(154, 127, 58) 80%, rgb(106, 85, 40) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 22.3961px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 9.32313s; animation-delay: -4.41595s;"></div><div class="coin" style="width: 23.3109px; height: 23.3109px; left: 70.7735vw; background: radial-gradient(circle at 40% 35%, rgb(240, 217, 138) 0%, rgb(201, 168, 76) 40%, rgb(138, 111, 46) 80%, rgb(90, 69, 32) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 23.3109px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 13.447s; animation-delay: -1.57109s;"></div><div class="coin" style="width: 11.591px; height: 11.591px; left: 70.6278vw; background: radial-gradient(circle at 35% 30%, rgb(245, 232, 154) 0%, rgb(212, 174, 90) 40%, rgb(154, 127, 58) 80%, rgb(106, 85, 40) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 11.591px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 10.5796s; animation-delay: -1.60259s;"></div><div class="coin" style="width: 8.95865px; height: 8.95865px; left: 48.037vw; background: radial-gradient(circle at 40% 35%, rgb(240, 217, 138) 0%, rgb(201, 168, 76) 40%, rgb(138, 111, 46) 80%, rgb(90, 69, 32) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 8.95865px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 15.0861s; animation-delay: -11.3653s;"></div><div class="coin" style="width: 21.9598px; height: 21.9598px; left: 93.5647vw; background: radial-gradient(circle at 40% 35%, rgb(240, 217, 138) 0%, rgb(201, 168, 76) 40%, rgb(138, 111, 46) 80%, rgb(90, 69, 32) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 21.9598px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 12.8981s; animation-delay: -5.46728s;"></div><div class="coin" style="width: 12.1442px; height: 12.1442px; left: 74.5544vw; background: radial-gradient(circle at 35% 30%, rgb(245, 232, 154) 0%, rgb(212, 174, 90) 40%, rgb(154, 127, 58) 80%, rgb(106, 85, 40) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 12.1442px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 7.34665s; animation-delay: -13.1951s;"></div><div class="coin" style="width: 15.5393px; height: 15.5393px; left: 81.2456vw; background: radial-gradient(circle at 40% 35%, rgb(240, 217, 138) 0%, rgb(201, 168, 76) 40%, rgb(138, 111, 46) 80%, rgb(90, 69, 32) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 15.5393px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 10.271s; animation-delay: -11.3621s;"></div><div class="coin" style="width: 24.7176px; height: 24.7176px; left: 71.9172vw; background: radial-gradient(circle at 35% 30%, rgb(245, 232, 154) 0%, rgb(212, 174, 90) 40%, rgb(154, 127, 58) 80%, rgb(106, 85, 40) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 24.7176px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 7.72241s; animation-delay: -12.3503s;"></div><div class="coin" style="width: 15.3136px; height: 15.3136px; left: 99.1942vw; background: radial-gradient(circle at 40% 35%, rgb(232, 197, 90) 0%, rgb(184, 148, 60) 40%, rgb(122, 95, 32) 80%, rgb(74, 53, 16) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 15.3136px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 14.0249s; animation-delay: -10.3876s;"></div><div class="coin" style="width: 20.6176px; height: 20.6176px; left: 39.0154vw; background: radial-gradient(circle at 35% 30%, rgb(245, 232, 154) 0%, rgb(212, 174, 90) 40%, rgb(154, 127, 58) 80%, rgb(106, 85, 40) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 20.6176px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 7.9417s; animation-delay: -0.84423s;"></div><div class="coin" style="width: 20.5057px; height: 20.5057px; left: 14.0177vw; background: radial-gradient(circle at 40% 35%, rgb(240, 217, 138) 0%, rgb(201, 168, 76) 40%, rgb(138, 111, 46) 80%, rgb(90, 69, 32) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 20.5057px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 9.64715s; animation-delay: -14.4666s;"></div><div class="coin" style="width: 24.4479px; height: 24.4479px; left: 19.6411vw; background: radial-gradient(circle at 40% 35%, rgb(240, 217, 138) 0%, rgb(201, 168, 76) 40%, rgb(138, 111, 46) 80%, rgb(90, 69, 32) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 24.4479px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 10.2609s; animation-delay: -6.73041s;"></div><div class="coin" style="width: 19.3928px; height: 19.3928px; left: 35.4291vw; background: radial-gradient(circle at 40% 35%, rgb(232, 197, 90) 0%, rgb(184, 148, 60) 40%, rgb(122, 95, 32) 80%, rgb(74, 53, 16) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 19.3928px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 11.4547s; animation-delay: -1.61931s;"></div><div class="coin" style="width: 25.847px; height: 25.847px; left: 14.4978vw; background: radial-gradient(circle at 35% 30%, rgb(245, 232, 154) 0%, rgb(212, 174, 90) 40%, rgb(154, 127, 58) 80%, rgb(106, 85, 40) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 25.847px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 14.5342s; animation-delay: -9.59929s;"></div><div class="coin" style="width: 20.3247px; height: 20.3247px; left: 38.464vw; background: radial-gradient(circle at 40% 35%, rgb(232, 197, 90) 0%, rgb(184, 148, 60) 40%, rgb(122, 95, 32) 80%, rgb(74, 53, 16) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 20.3247px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 6.49541s; animation-delay: -5.62527s;"></div><div class="coin" style="width: 21.6965px; height: 21.6965px; left: 82.6641vw; background: radial-gradient(circle at 40% 35%, rgb(240, 217, 138) 0%, rgb(201, 168, 76) 40%, rgb(138, 111, 46) 80%, rgb(90, 69, 32) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 21.6965px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 7.24985s; animation-delay: -14.1844s;"></div><div class="coin" style="width: 14.5056px; height: 14.5056px; left: 47.3901vw; background: radial-gradient(circle at 35% 30%, rgb(245, 232, 154) 0%, rgb(212, 174, 90) 40%, rgb(154, 127, 58) 80%, rgb(106, 85, 40) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 14.5056px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 6.73061s; animation-delay: -9.92808s;"></div><div class="coin" style="width: 22.6303px; height: 22.6303px; left: 31.3231vw; background: radial-gradient(circle at 40% 35%, rgb(240, 217, 138) 0%, rgb(201, 168, 76) 40%, rgb(138, 111, 46) 80%, rgb(90, 69, 32) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 22.6303px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 13.9532s; animation-delay: -9.17713s;"></div><div class="coin" style="width: 23.8128px; height: 23.8128px; left: 56.921vw; background: radial-gradient(circle at 40% 35%, rgb(232, 197, 90) 0%, rgb(184, 148, 60) 40%, rgb(122, 95, 32) 80%, rgb(74, 53, 16) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 23.8128px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 9.29069s; animation-delay: -5.45816s;"></div><div class="coin" style="width: 11.5354px; height: 11.5354px; left: 95.9431vw; background: radial-gradient(circle at 40% 35%, rgb(240, 217, 138) 0%, rgb(201, 168, 76) 40%, rgb(138, 111, 46) 80%, rgb(90, 69, 32) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 11.5354px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 15.8629s; animation-delay: -13.1935s;"></div><div class="coin" style="width: 11.5595px; height: 11.5595px; left: 31.6547vw; background: radial-gradient(circle at 40% 35%, rgb(232, 197, 90) 0%, rgb(184, 148, 60) 40%, rgb(122, 95, 32) 80%, rgb(74, 53, 16) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 11.5595px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 15.2399s; animation-delay: -12.4525s;"></div><div class="coin" style="width: 14.9484px; height: 14.9484px; left: 15.2765vw; background: radial-gradient(circle at 35% 30%, rgb(245, 232, 154) 0%, rgb(212, 174, 90) 40%, rgb(154, 127, 58) 80%, rgb(106, 85, 40) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 14.9484px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 12.5737s; animation-delay: -14.2103s;"></div><div class="coin" style="width: 17.6481px; height: 17.6481px; left: 80.9522vw; background: radial-gradient(circle at 40% 35%, rgb(232, 197, 90) 0%, rgb(184, 148, 60) 40%, rgb(122, 95, 32) 80%, rgb(74, 53, 16) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 17.6481px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 14.3415s; animation-delay: -5.95062s;"></div><div class="coin" style="width: 18.4297px; height: 18.4297px; left: 23.6482vw; background: radial-gradient(circle at 40% 35%, rgb(240, 217, 138) 0%, rgb(201, 168, 76) 40%, rgb(138, 111, 46) 80%, rgb(90, 69, 32) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 18.4297px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 11.7633s; animation-delay: -11.6456s;"></div><div class="coin" style="width: 15.0477px; height: 15.0477px; left: 80.218vw; background: radial-gradient(circle at 35% 30%, rgb(245, 232, 154) 0%, rgb(212, 174, 90) 40%, rgb(154, 127, 58) 80%, rgb(106, 85, 40) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 15.0477px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 6.2593s; animation-delay: -14.7777s;"></div><div class="coin" style="width: 12.282px; height: 12.282px; left: 47.8429vw; background: radial-gradient(circle at 40% 35%, rgb(232, 197, 90) 0%, rgb(184, 148, 60) 40%, rgb(122, 95, 32) 80%, rgb(74, 53, 16) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 12.282px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 11.483s; animation-delay: -4.16094s;"></div><div class="coin" style="width: 20.9793px; height: 20.9793px; left: 13.9666vw; background: radial-gradient(circle at 35% 30%, rgb(245, 232, 154) 0%, rgb(212, 174, 90) 40%, rgb(154, 127, 58) 80%, rgb(106, 85, 40) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 20.9793px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 14.1854s; animation-delay: -11.8614s;"></div><div class="coin" style="width: 9.73771px; height: 9.73771px; left: 78.2277vw; background: radial-gradient(circle at 40% 35%, rgb(240, 217, 138) 0%, rgb(201, 168, 76) 40%, rgb(138, 111, 46) 80%, rgb(90, 69, 32) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 9.73771px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 6.12103s; animation-delay: -2.46176s;"></div><div class="coin" style="width: 25.5269px; height: 25.5269px; left: 14.9398vw; background: radial-gradient(circle at 35% 30%, rgb(245, 232, 154) 0%, rgb(212, 174, 90) 40%, rgb(154, 127, 58) 80%, rgb(106, 85, 40) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 25.5269px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 10.1242s; animation-delay: -8.48852s;"></div><div class="coin" style="width: 12.965px; height: 12.965px; left: 12.9543vw; background: radial-gradient(circle at 40% 35%, rgb(232, 197, 90) 0%, rgb(184, 148, 60) 40%, rgb(122, 95, 32) 80%, rgb(74, 53, 16) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 12.965px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 14.2807s; animation-delay: -5.21328s;"></div><div class="coin" style="width: 9.79176px; height: 9.79176px; left: 5.94695vw; background: radial-gradient(circle at 35% 30%, rgb(245, 232, 154) 0%, rgb(212, 174, 90) 40%, rgb(154, 127, 58) 80%, rgb(106, 85, 40) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 9.79176px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 12.8706s; animation-delay: -2.95212s;"></div><div class="coin" style="width: 11.4935px; height: 11.4935px; left: 56.6651vw; background: radial-gradient(circle at 35% 30%, rgb(245, 232, 154) 0%, rgb(212, 174, 90) 40%, rgb(154, 127, 58) 80%, rgb(106, 85, 40) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 11.4935px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 6.29817s; animation-delay: -1.03558s;"></div><div class="coin" style="width: 19.531px; height: 19.531px; left: 27.714vw; background: radial-gradient(circle at 40% 35%, rgb(232, 197, 90) 0%, rgb(184, 148, 60) 40%, rgb(122, 95, 32) 80%, rgb(74, 53, 16) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 19.531px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 14.8768s; animation-delay: -12.04s;"></div><div class="coin" style="width: 12.1611px; height: 12.1611px; left: 34.829vw; background: radial-gradient(circle at 40% 35%, rgb(232, 197, 90) 0%, rgb(184, 148, 60) 40%, rgb(122, 95, 32) 80%, rgb(74, 53, 16) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 12.1611px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 14.047s; animation-delay: -2.19705s;"></div><div class="coin" style="width: 19.084px; height: 19.084px; left: 86.8418vw; background: radial-gradient(circle at 35% 30%, rgb(245, 232, 154) 0%, rgb(212, 174, 90) 40%, rgb(154, 127, 58) 80%, rgb(106, 85, 40) 100%); box-shadow: rgba(201, 168, 76, 0.4) 0px 0px 19.084px, rgba(255, 255, 255, 0.3) 0px 1px 2px inset; animation-duration: 7.15005s; animation-delay: -0.539882s;"></div></div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">Group Savings · Reimagined for the Culture</p>
+    <h1 class="hero-title">
+      <span class="the">The</span>
+      <span class="pot">POT</span>
+      <span class="unlim">Unlimited</span>
+    </h1>
+    <p class="hero-tagline">
+      Pool your money. Multiply your power. 
+      The community savings app built by us, for us —
+      where every contribution brings the whole circle up.
+    </p>
+    <div class="hero-actions">
+      <a href="file:///Users/robynavery/Downloads/thepotunlimited.html#cta" class="btn-gold"><span>Download the App</span></a>
+      <a href="file:///Users/robynavery/Downloads/thepotunlimited.html#how" class="btn-ghost">See How It Works</a>
+    </div>
+  </div>
+
+  <div class="scroll-cue">
+    <span>Scroll</span>
+    <div class="scroll-cue-line"></div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS — SVG flow diagram draws on scroll ── -->
+<section id="how">
+  <div class="how-text">
+    <div class="section-label">The Process</div>
+    <h2 class="how-title">Simple by design.<br><em>Powerful by nature.</em></h2>
+    <p class="how-body">
+      No banks. No gatekeepers. No confusing terms.
+      The Pot is a rotating savings circle that turns
+      community into capital — automatically.
+    </p>
+    <ol class="steps-list">
+      <li>
+        <span class="step-num">01</span>
+        <div class="step-text">
+          <strong>Create or Join a Pot</strong>
+          <span>Start your own savings circle or accept an invite. You set the amount, the cadence, the crew.</span>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">02</span>
+        <div class="step-text">
+          <strong>Everyone Contributes</strong>
+          <span>Each member drops in their share every cycle. The app handles reminders, tracking, and receipts.</span>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">03</span>
+        <div class="step-text">
+          <strong>One Person Gets the Pot</strong>
+          <span>Rotating payouts go to a different member each cycle until everyone has received their full sum.</span>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">04</span>
+        <div class="step-text">
+          <strong>Build &amp; Repeat</strong>
+          <span>Track your savings history, grow your credit story, and run multiple pots simultaneously.</span>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <!-- SVG Flow Diagram — draws on scroll -->
+  <div class="flow-svg-wrap" id="flowWrap">
+    <svg class="flow-svg" viewBox="0 0 480 440" xmlns="http://www.w3.org/2000/svg">
+      <!-- Connecting flow lines -->
+      <path class="flow-path drawn" id="fp1" stroke="rgba(201,168,76,0.5)" stroke-width="1.5" d="M240,40 L240,110"></path>
+      <path class="flow-path drawn" id="fp2" stroke="rgba(201,168,76,0.3)" stroke-width="1" d="M240,150 L240,210"></path>
+      <path class="flow-path drawn" id="fp3" stroke="rgba(201,168,76,0.5)" stroke-width="1.5" d="M240,250 L240,310"></path>
+      <path class="flow-path drawn" id="fp4" stroke="rgba(201,168,76,0.3)" stroke-width="1" d="M240,350 L240,410"></path>
+      <!-- Orbit circles around central node -->
+      <path class="flow-path drawn" id="fp5" stroke="rgba(91,63,160,0.4)" stroke-width="1" d="M240,240 m-90,0 a90,90 0 1,1 180,0 a90,90 0 1,1 -180,0" stroke-dasharray="1800"></path>
+      <!-- Member spokes -->
+      <path class="flow-path drawn" id="fp6" stroke="rgba(201,168,76,0.25)" stroke-width=".8" d="M150,240 L100,160 M330,240 L380,160 M240,150 L240,80 M150,310 L100,380 M330,310 L380,380"></path>
+      <!-- Dashed contribution lines -->
+      <path class="flow-path drawn" id="fp7" stroke="rgba(201,168,76,0.2)" stroke-width=".6" stroke-dasharray="4 4" d="M100,160 L240,240 M380,160 L240,240 M240,80 L240,240 M100,380 L240,240 M380,380 L240,240"></path>
+
+      <!-- CENTER NODE -->
+      <circle class="flow-node drawn" id="fn0" cx="240" cy="240" r="38" fill="rgba(201,168,76,0.12)" stroke="rgba(201,168,76,0.6)" stroke-width="1.5"></circle>
+      <circle class="flow-node drawn" cx="240" cy="240" r="28" fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.3)" stroke-width="1"></circle>
+      <text class="flow-node drawn" x="240" y="236" fill="#C9A84C" font-size="8" font-family="DM Sans, sans-serif" font-weight="400" letter-spacing="2" text-anchor="middle">THE</text>
+      <text class="flow-node drawn" x="240" y="249" fill="#C9A84C" font-size="10" font-family="Bebas Neue, sans-serif" letter-spacing="3" text-anchor="middle">POT</text>
+
+      <!-- MEMBER NODES -->
+      <circle class="flow-node drawn" cx="100" cy="160" r="22" fill="rgba(45,31,80,0.8)" stroke="rgba(201,168,76,0.4)" stroke-width="1"></circle>
+      <text class="flow-node drawn" x="100" y="155" fill="#C4B98A" font-size="7" font-family="DM Sans" text-anchor="middle" letter-spacing="1">MEMBER</text>
+      <text class="flow-node drawn" x="100" y="167" fill="#E8C55A" font-size="9" font-family="Bebas Neue" text-anchor="middle" letter-spacing="2">01</text>
+
+      <circle class="flow-node drawn" cx="380" cy="160" r="22" fill="rgba(45,31,80,0.8)" stroke="rgba(201,168,76,0.4)" stroke-width="1"></circle>
+      <text class="flow-node drawn" x="380" y="155" fill="#C4B98A" font-size="7" font-family="DM Sans" text-anchor="middle" letter-spacing="1">MEMBER</text>
+      <text class="flow-node drawn" x="380" y="167" fill="#E8C55A" font-size="9" font-family="Bebas Neue" text-anchor="middle" letter-spacing="2">02</text>
+
+      <circle class="flow-node drawn" cx="240" cy="72" r="22" fill="rgba(45,31,80,0.8)" stroke="rgba(201,168,76,0.4)" stroke-width="1"></circle>
+      <text class="flow-node drawn" x="240" y="67" fill="#C4B98A" font-size="7" font-family="DM Sans" text-anchor="middle" letter-spacing="1">MEMBER</text>
+      <text class="flow-node drawn" x="240" y="79" fill="#E8C55A" font-size="9" font-family="Bebas Neue" text-anchor="middle" letter-spacing="2">03</text>
+
+      <circle class="flow-node drawn" cx="100" cy="380" r="22" fill="rgba(45,31,80,0.8)" stroke="rgba(201,168,76,0.4)" stroke-width="1"></circle>
+      <text class="flow-node drawn" x="100" y="375" fill="#C4B98A" font-size="7" font-family="DM Sans" text-anchor="middle" letter-spacing="1">MEMBER</text>
+      <text class="flow-node drawn" x="100" y="387" fill="#E8C55A" font-size="9" font-family="Bebas Neue" text-anchor="middle" letter-spacing="2">04</text>
+
+      <circle class="flow-node drawn" cx="380" cy="380" r="22" fill="rgba(45,31,80,0.8)" stroke="rgba(201,168,76,0.4)" stroke-width="1"></circle>
+      <text class="flow-node drawn" x="380" y="375" fill="#C4B98A" font-size="7" font-family="DM Sans" text-anchor="middle" letter-spacing="1">MEMBER</text>
+      <text class="flow-node drawn" x="380" y="387" fill="#E8C55A" font-size="9" font-family="Bebas Neue" text-anchor="middle" letter-spacing="2">05</text>
+    </svg>
+  </div>
+</section>
+
+<!-- ── FEATURE ROOMS ── -->
+<section class="feature-room" id="feat-1" style="transform: scale(1.06); transition: transform 12s;">
+  <div class="feature-visual scene-pool" style="transform: scale(1.05); transition: transform 10s;">
+    <div class="scene-deco">
+      <svg width="180" height="180" viewBox="0 0 180 180" fill="none" opacity=".25">
+        <circle cx="90" cy="90" r="80" stroke="#C9A84C" stroke-width="1"></circle>
+        <circle cx="90" cy="90" r="60" stroke="#C9A84C" stroke-width=".7" stroke-dasharray="5 5"></circle>
+        <circle cx="90" cy="90" r="40" stroke="#C9A84C" stroke-width="1"></circle>
+        <path d="M90 10 L90 170 M10 90 L170 90 M26 26 L154 154 M154 26 L26 154" stroke="#C9A84C" stroke-width=".5" opacity=".5"></path>
+        <circle cx="90" cy="90" r="8" fill="rgba(201,168,76,0.3)" stroke="#C9A84C" stroke-width="1"></circle>
+        <text x="90" y="94" fill="#C9A84C" font-size="7" font-family="Bebas Neue" letter-spacing="2" text-anchor="middle">POT</text>
+      </svg>
+    </div>
+  </div>
+  <div class="feature-info" data-icon="POOL">
+    <div class="section-label">Feature One</div>
+    <h2 class="feature-name">Group<br><em>Savings Pools</em></h2>
+    <div class="gold-rule"></div>
+    <p class="feature-desc">
+      Invite your people and build a pot together.
+      Set custom contribution amounts from $25 to $10,000 per cycle,
+      choose your cadence — weekly, bi-weekly, monthly —
+      and watch the collective wealth stack in real time.
+    </p>
+    <div class="feature-tags">
+      <span class="tag">Up to 20 Members</span>
+      <span class="tag">Flexible Cycles</span>
+      <span class="tag">Instant Payouts</span>
+    </div>
+  </div>
+</section>
+
+<section class="feature-room" id="feat-2">
+  <div class="feature-visual scene-stats" style="transform: scale(1.05); transition: transform 10s;">
+    <div class="scene-deco">
+      <svg width="180" height="200" viewBox="0 0 180 200" fill="none" opacity=".25">
+        <rect x="20" y="140" width="24" height="50" fill="rgba(201,168,76,0.4)" stroke="#C9A84C" stroke-width="1"></rect>
+        <rect x="54" y="100" width="24" height="90" fill="rgba(201,168,76,0.3)" stroke="#C9A84C" stroke-width="1"></rect>
+        <rect x="88" y="60" width="24" height="130" fill="rgba(201,168,76,0.4)" stroke="#C9A84C" stroke-width="1"></rect>
+        <rect x="122" y="20" width="24" height="170" fill="rgba(201,168,76,0.6)" stroke="#C9A84C" stroke-width="1.5"></rect>
+        <path d="M10 190 L170 190" stroke="#C9A84C" stroke-width=".8"></path>
+        <path d="M32 138 L66 98 L100 58 L134 18" stroke="#E8C55A" stroke-width="1.5" stroke-dasharray="3 2"></path>
+      </svg>
+    </div>
+  </div>
+  <div class="feature-info" data-icon="TRACK">
+    <div class="section-label">Feature Two</div>
+    <h2 class="feature-name">Live<br><em>Savings Tracking</em></h2>
+    <div class="gold-rule"></div>
+    <p class="feature-desc">
+      Every dollar tracked. Every payout logged.
+      Your personal dashboard shows contribution history,
+      upcoming payout dates, and a running total of
+      what the Pot has moved — with full transparency for every member.
+    </p>
+    <div class="feature-tags">
+      <span class="tag">Real-Time Dashboard</span>
+      <span class="tag">Payment History</span>
+      <span class="tag">Payout Schedule</span>
+    </div>
+  </div>
+</section>
+
+<section class="feature-room" id="feat-3">
+  <div class="feature-visual scene-social" style="transform: scale(1.05); transition: transform 10s;">
+    <div class="scene-deco">
+      <svg width="200" height="170" viewBox="0 0 200 170" fill="none" opacity=".25">
+        <circle cx="100" cy="60" r="28" stroke="#C9A84C" stroke-width="1"></circle>
+        <circle cx="40" cy="120" r="20" stroke="#C9A84C" stroke-width="1"></circle>
+        <circle cx="160" cy="120" r="20" stroke="#C9A84C" stroke-width="1"></circle>
+        <circle cx="100" cy="140" r="20" stroke="#C9A84C" stroke-width="1"></circle>
+        <path d="M100 88 L40 100 M100 88 L160 100 M100 88 L100 120" stroke="#C9A84C" stroke-width="1" stroke-dasharray="4 3"></path>
+        <circle cx="100" cy="60" r="8" fill="rgba(201,168,76,0.3)"></circle>
+        <circle cx="40" cy="120" r="6" fill="rgba(201,168,76,0.2)"></circle>
+        <circle cx="160" cy="120" r="6" fill="rgba(201,168,76,0.2)"></circle>
+        <circle cx="100" cy="140" r="6" fill="rgba(201,168,76,0.2)"></circle>
+      </svg>
+    </div>
+  </div>
+  <div class="feature-info" data-icon="COMMUNITY">
+    <div class="section-label">Feature Three</div>
+    <h2 class="feature-name">Trust-Based<br><em>Communities</em></h2>
+    <div class="gold-rule"></div>
+    <p class="feature-desc">
+      We built trust into the infrastructure.
+      Member ratings, contribution streaks, and accountability scores
+      let you see who shows up — so you pot with confidence
+      and invite only those who move with integrity.
+    </p>
+    <div class="feature-tags">
+      <span class="tag">Member Ratings</span>
+      <span class="tag">Contribution Streaks</span>
+      <span class="tag">Private Invites</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── TILT PODS ── -->
+<section id="pods">
+  <div class="pods-header">
+    <div class="section-label" style="justify-content:center;">Why The Pot</div>
+    <h2>Built Different.<br><span>Built for Us.</span></h2>
+    <p>Six reasons the culture chose us</p>
+  </div>
+
+  <div class="pods-grid">
+    <div class="pod" data-tilt="" data-tilt-max="7" data-tilt-speed="600" data-tilt-glare="true" data-tilt-max-glare="0.06" data-tilt-perspective="1000">
+      <div class="pod-corner"></div>
+      <div class="pod-icon">💰</div>
+      <h3 class="pod-title">No Interest. No Debt.</h3>
+      <p class="pod-body">Access thousands of dollars without paying a single cent in interest. This is community capital — not a loan.</p>
+    </div>
+
+    <div class="pod" data-tilt="" data-tilt-max="7" data-tilt-speed="600" data-tilt-glare="true" data-tilt-max-glare="0.06" data-tilt-perspective="1000">
+      <div class="pod-corner"></div>
+      <div class="pod-icon">🔒</div>
+      <h3 class="pod-title">Bank-Grade Security</h3>
+      <p class="pod-body">256-bit encryption, multi-factor authentication, and FDIC-insured fund holding. Your money is protected, period.</p>
+    </div>
+
+    <div class="pod" data-tilt="" data-tilt-max="7" data-tilt-speed="600" data-tilt-glare="true" data-tilt-max-glare="0.06" data-tilt-perspective="1000">
+      <div class="pod-corner"></div>
+      <div class="pod-icon">📈</div>
+      <h3 class="pod-title">Build Your Credit Story</h3>
+      <p class="pod-body">Opt-in credit reporting turns your savings discipline into a real credit score boost. Get rewarded for showing up.</p>
+    </div>
+
+    <div class="pod" data-tilt="" data-tilt-max="7" data-tilt-speed="600" data-tilt-glare="true" data-tilt-max-glare="0.06" data-tilt-perspective="1000">
+      <div class="pod-corner"></div>
+      <div class="pod-icon">⚡</div>
+      <h3 class="pod-title">Instant Payouts</h3>
+      <p class="pod-body">When it's your turn, funds hit your account same day. No waiting three to five business days. Your money moves fast.</p>
+    </div>
+
+    <div class="pod" data-tilt="" data-tilt-max="7" data-tilt-speed="600" data-tilt-glare="true" data-tilt-max-glare="0.06" data-tilt-perspective="1000">
+      <div class="pod-corner"></div>
+      <div class="pod-icon">🌐</div>
+      <h3 class="pod-title">Run Multiple Pots</h3>
+      <p class="pod-body">Stack your savings strategies. Run a family pot, a friend pot, and a business pot at the same time — all in one app.</p>
+    </div>
+
+    <div class="pod" data-tilt="" data-tilt-max="7" data-tilt-speed="600" data-tilt-glare="true" data-tilt-max-glare="0.06" data-tilt-perspective="1000">
+      <div class="pod-corner"></div>
+      <div class="pod-icon">🤝</div>
+      <h3 class="pod-title">Real Accountability</h3>
+      <p class="pod-body">Automated reminders, contribution streaks, and member trust scores keep everyone aligned so no one lets the circle down.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROOF ── -->
+<section id="proof">
+  <div class="proof-numbers">
+    <div class="proof-num-item">
+      <span class="proof-big" data-target="2400000">$2,400,000</span>
+      <span class="proof-label">Pooled to Date</span>
+    </div>
+    <div class="proof-num-item">
+      <span class="proof-big" data-target="8400">8,400</span>
+      <span class="proof-label">Active Members</span>
+    </div>
+    <div class="proof-num-item">
+      <span class="proof-big" data-target="98">98%</span>
+      <span class="proof-label">Payout Rate</span>
+    </div>
+    <div class="proof-num-item">
+      <span class="proof-big" data-target="4.9">4.9</span>
+      <span class="proof-label">App Store Rating</span>
+    </div>
+  </div>
+
+  <div class="proof-quote">
+    <blockquote>
+      "I got my $4,000 payout on a Tuesday and bought my daughter's school laptop in cash. That's what community money does."
+    </blockquote>
+    <cite>— Dominique T., Houston TX · Member Since 2023</cite>
+  </div>
+</section>
+
+<!-- ── CLOSING CTA ── -->
+<section id="cta">
+  <div class="cta-inner">
+    <span class="cta-tag">The Movement Starts Here</span>
+    <h2 class="cta-title">
+      Your Pot Is<br>
+      <span>Waiting on You</span>
+    </h2>
+    <p class="cta-sub">
+      Thousands of circles running right now.
+      Download the app, join a pot, and let the community
+      put real money in your hands.
+    </p>
+    <div class="cta-buttons">
+      <a href="file:///Users/robynavery/Downloads/thepotunlimited.html#" class="btn-gold"><span>Download Free — iOS &amp; Android</span></a>
+    </div>
+    <a href="https://thepotunlimited.com/" target="_blank" class="cta-url">thepotunlimited.com</a>
+  </div>
+</section>
+
+
+<script>
+  // ── CURSOR ──────────────────────────────────
+  const cDot = document.getElementById('cDot');
+  const cRing = document.getElementById('cRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cDot.style.left = mx + 'px';
+    cDot.style.top  = my + 'px';
+  });
+  (function animCursor() {
+    rx += (mx - rx) * .1;
+    ry += (my - ry) * .1;
+    cRing.style.left = rx + 'px';
+    cRing.style.top  = ry + 'px';
+    requestAnimationFrame(animCursor);
+  })();
+
+
+  // ── CSS COIN FIELD (autoplay muted loop visual) ──
+  const coinField = document.getElementById('coinField');
+  const coinColors = [
+    'radial-gradient(circle at 40% 35%, #F0D98A 0%, #C9A84C 40%, #8A6F2E 80%, #5A4520 100%)',
+    'radial-gradient(circle at 40% 35%, #E8C55A 0%, #B8943C 40%, #7A5F20 80%, #4A3510 100%)',
+    'radial-gradient(circle at 35% 30%, #F5E89A 0%, #D4AE5A 40%, #9A7F3A 80%, #6A5528 100%)',
+  ];
+
+  function spawnCoin() {
+    const coin = document.createElement('div');
+    coin.className = 'coin';
+    const size = 8 + Math.random() * 18;
+    coin.style.cssText = `
+      width: ${size}px;
+      height: ${size}px;
+      left: ${Math.random() * 100}vw;
+      background: ${coinColors[Math.floor(Math.random() * coinColors.length)]};
+      box-shadow: 0 0 ${size}px rgba(201,168,76,0.4), inset 0 1px 2px rgba(255,255,255,0.3);
+      animation-duration: ${6 + Math.random() * 10}s;
+      animation-delay: ${Math.random() * -15}s;
+    `;
+    coinField.appendChild(coin);
+    if (coinField.children.length > 35) coinField.removeChild(coinField.firstChild);
+  }
+
+  for (let i = 0; i < 30; i++) spawnCoin();
+  setInterval(spawnCoin, 800);
+
+
+  // ── SVG FLOW DIAGRAM — IntersectionObserver ──
+  const flowWrap = document.getElementById('flowWrap');
+  const flowPaths = document.querySelectorAll('.flow-path');
+  const flowNodes = document.querySelectorAll('.flow-node');
+
+  new IntersectionObserver(entries => {
+    if (!entries[0].isIntersecting) return;
+    flowPaths.forEach((p, i) => setTimeout(() => p.classList.add('drawn'), i * 180));
+    flowNodes.forEach((n, i) => setTimeout(() => n.classList.add('drawn'), i * 80 + 400));
+  }, { threshold: 0.3 }).observe(flowWrap);
+
+
+  // ── LAZY LOAD feature scenes ──
+  const scenes = document.querySelectorAll('.feature-visual');
+  new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.transition = 'transform 12s ease';
+        e.target.style.transform  = 'scale(1)';
+      } else {
+        e.target.style.transform = 'scale(1.06)';
+      }
+    });
+  }, { threshold: 0.5 }).observe(document.querySelector('.feature-room'));
+
+  document.querySelectorAll('.feature-room').forEach(room => {
+    new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        const vis = e.target.querySelector('.feature-visual');
+        if (e.isIntersecting) {
+          vis.style.transition = 'transform 10s ease';
+          vis.style.transform  = 'scale(1)';
+        } else {
+          vis.style.transform = 'scale(1.05)';
+        }
+      });
+    }, { threshold: 0.5 }).observe(room);
+  });
+
+
+  // ── COUNT-UP ANIMATION ──
+  const proofNums = document.querySelectorAll('[data-target]');
+  new IntersectionObserver(entries => {
+    if (!entries[0].isIntersecting) return;
+    proofNums.forEach(el => {
+      const target = parseFloat(el.dataset.target);
+      const isUSD  = target > 9999;
+      const isStar = target < 5 && target !== 98;
+      const isPct  = target === 98;
+      const dur    = 2200;
+      const start  = performance.now();
+      (function tick(now) {
+        const p = Math.min((now - start) / dur, 1);
+        const ease = 1 - Math.pow(1 - p, 3);
+        const val = target * ease;
+        if (isUSD)      el.textContent = '$' + Math.floor(val).toLocaleString();
+        else if (isPct) el.textContent = Math.floor(val) + '%';
+        else if (isStar)el.textContent = val.toFixed(1);
+        else            el.textContent = Math.floor(val).toLocaleString();
+        if (p < 1) requestAnimationFrame(tick);
+      })(start);
+    });
+  }, { threshold: 0.5 }).observe(document.getElementById('proof'));
+
+
+  // ── NAV STYLE on light sections ──
+  const sections = document.querySelectorAll('section');
+  const navBrand = document.querySelector('.nav-brand');
+  new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting && e.target.id === 'pods') {
+        navBrand.style.color = '#F5EFD8';
+      }
+    });
+  }, { threshold: 0.5 }).observe(document.getElementById('pods'));
+</script>
+
+
+
+</body></html>
